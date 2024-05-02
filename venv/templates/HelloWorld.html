@@ -1,0 +1,49 @@
+<!-- HelloWorld.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Request with Input</title>
+</head>
+<body>
+    <h1>성능 테스트를 해보자</h1>
+    <form id="numForm">
+        <label for="num1">Number 1:</label>
+        <input type="number" id="num1" name="num1"><br><br>
+        <label for="num2">Number 2:</label>
+        <input type="number" id="num2" name="num2"><br><br>
+        <button type="submit">API Request</button>
+    </form>
+
+    <script>
+        document.getElementById('numForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // 기본 이벤트 방지 (페이지 새로고침)
+
+            // 사용자가 입력한 숫자 가져오기
+            var num1 = parseInt(document.getElementById('num1').value);
+            var num2 = parseInt(document.getElementById('num2').value);
+
+            // API에 전달할 데이터 준비
+            var data = {num1: num1, num2: num2};
+
+            // API 요청 보내기
+            fetch('/request_api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert("Result: " + data.result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Failed to get response from API");
+            });
+        });
+    </script>
+</body>
+</html>
