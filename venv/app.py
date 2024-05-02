@@ -7,11 +7,17 @@ app=Flask(__name__)
 def home():
     return render_template('HelloWorld.html')
 
-@app.route('/request_api/<operation>', methods=['POST'])
+@app.route('/request_api/<operation>', methods=['GET','POST'])
 def request_api(operation):
-    data = request.get_json()
-    num1 = data.get('num1')
-    num2 = data.get('num2')
+    if request.method == 'GET':
+        num1 = int(request.args.get('num1'))
+        num2 = int(request.args.get('num2'))
+    elif request.method == 'POST':
+        data = request.get_json()
+        num1 = data.get('num1')
+        num2 = data.get('num2')
+    else:
+        return jsonify({'error': 'Invalid request method'}), 400
 
     if operation == 'add':
         result = num1 + num2
