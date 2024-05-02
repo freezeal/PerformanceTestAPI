@@ -5,19 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Request with Input</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>성능 테스트를 해보자</h1>
-    <form id="numForm">
-        <label for="num1">Number 1:</label>
-        <input type="number" id="num1" name="num1"><br><br>
-        <label for="num2">Number 2:</label>
-        <input type="number" id="num2" name="num2"><br><br>
-        <button type="button" onclick="requestAPI('add')">PlusApi Request</button>
-        <button type="button" onclick="requestAPI('subtract')">MinusApi Request</button>
-        <button type="button" onclick="requestAPI('multiply')">MultiApi Request</button>
-        <button type="button" onclick="requestAPI('divide')">DivApi Request</button>
-    </form>
+    <div class="container">
+        <h1>성능 테스트를 해보자</h1>
+        <form id="numForm">
+            <label for="num1">Number 1:</label>
+            <input type="number" id="num1" name="num1"><br><br>
+            <label for="num2">Number 2:</label>
+            <input type="number" id="num2" name="num2"><br><br>
+            <button type="button" onclick="requestAPI('add')">PlusApi Request</button>
+            <button type="button" onclick="requestAPI('subtract')">MinusApi Request</button>
+            <button type="button" onclick="requestAPI('multiply')">MultiApi Request</button>
+            <button type="button" onclick="requestAPI('divide')">DivApi Request</button>
+        </form>
+    </div>
 
      <script>
         function requestAPI(operation) {
