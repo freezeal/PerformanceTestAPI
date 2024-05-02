@@ -13,13 +13,14 @@
         <input type="number" id="num1" name="num1"><br><br>
         <label for="num2">Number 2:</label>
         <input type="number" id="num2" name="num2"><br><br>
-        <button type="submit">API Request</button>
+        <button type="button" onclick="requestAPI('add')">PlusApi Request</button>
+        <button type="button" onclick="requestAPI('subtract')">MinusApi Request</button>
+        <button type="button" onclick="requestAPI('multiply')">MultiApi Request</button>
+        <button type="button" onclick="requestAPI('divide')">DivApi Request</button>
     </form>
 
-    <script>
-        document.getElementById('numForm').addEventListener('submit', function(event) {
-            event.preventDefault();  // 기본 이벤트 방지 (페이지 새로고침)
-
+     <script>
+        function requestAPI(operation) {
             // 사용자가 입력한 숫자 가져오기
             var num1 = parseInt(document.getElementById('num1').value);
             var num2 = parseInt(document.getElementById('num2').value);
@@ -28,7 +29,7 @@
             var data = {num1: num1, num2: num2};
 
             // API 요청 보내기
-            fetch('/request_api', {
+            fetch('/request_api/' + operation, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -43,7 +44,7 @@
                 console.error('Error:', error);
                 alert("Failed to get response from API");
             });
-        });
+        }
     </script>
 </body>
 </html>
