@@ -32,7 +32,8 @@
             <button type="button" onclick="requestAPI('multiply')">MultiApi Request</button>
             <button type="button" onclick="requestAPI('divide')">DivApi Request</button>
             <br><br>
-            <button type="button" onclick="showImage()">이미지 보기</button>
+            <button type="button" onclick="showImage()">화면 전환</button>
+            <button type="button" onclick="HistoryView()">히스토리</button>
         </form>
     </div>
 
@@ -64,6 +65,9 @@
         }
          function showImage() {
             window.location.href = "/show_image";
+         }
+         function HistoryView() {
+            window.location.href = "/history_view";
          }
     </script>
 </body>
