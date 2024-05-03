@@ -35,5 +35,9 @@ def request_api(operation):
 
     return jsonify({'result': result})
 
+@app.route('/show_image')
+def show_image():
+    return render_template('ShowImage.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
