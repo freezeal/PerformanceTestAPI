@@ -1,0 +1,32 @@
+<!-- image.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Background</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <!-- 내용이 여기에 표시됩니다. -->
+    </div>
+
+    <script>
+        window.onload = function() {
+            // content 요소에 내용 추가
+            var content = document.getElementById('content');
+            content.innerHTML = '<h1 style="color: white;">This is a black background</h1>';
+        };
+    </script>
+</body>
+</html>
