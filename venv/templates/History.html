@@ -1,0 +1,106 @@
+<!-- history.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산 결과 조회</title>
+    <style>
+        body {
+            text-align: center; /* 모든 요소를 가운데 정렬 */
+        }
+
+        h1 {
+            margin-top: 50px; /* 타이틀의 위 여백 조절 */
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>계산 내역을 보자</h1>
+    <button type="button" onclick="deleteHistory()">Delete All History</button>
+    <table id="historyTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Number 1</th>
+                <th>Operation</th>
+                <th>Number 2</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 계산 히스토리가 여기에 표시됩니다. -->
+        </tbody>
+    </table>
+
+    <script>
+        // 페이지가 로드될 때 호출되는 함수
+        window.onload = function() {
+            // /history_api 엔드포인트에서 계산 히스토리 데이터를 가져와서 표시하는 함수 호출
+            fetchHistory();
+        };
+
+        // 계산 히스토리 데이터를 가져와서 표시하는 함수
+        function fetchHistory() {
+            fetch('/history_api')
+            .then(response => response.json())
+            .then(data => {
+                // 가져온 계산 히스토리 데이터를 사용하여 화면에 표시
+                displayHistory(data.history);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Failed to fetch calculation history");
+            });
+        }
+
+        // 계산 히스토리 데이터를 화면에 표시하는 함수
+        function displayHistory(history) {
+            var historyTable = document.getElementById('historyTable');
+            var tbody = historyTable.getElementsByTagName('tbody')[0];
+
+            // 계산 히스토리를 테이블 형식으로 표시
+            history.forEach(function(item) {
+                var row = tbody.insertRow();
+                row.insertCell().textContent = item.id;
+                row.insertCell().textContent = item.num1;
+                row.insertCell().textContent = item.operation;
+                row.insertCell().textContent = item.num2;
+                row.insertCell().textContent = item.result;
+            });
+        }
+
+        function deleteHistory() {
+            // DELETE 요청을 보내어 히스토리를 삭제
+            fetch('/delete_history', {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 성공적으로 삭제되었을 때 알림 표시
+                alert(data.message);
+                // 화면 갱신
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Failed to delete calculation history");
+            });
+        }
+    </script>
+</body>
+</html>
