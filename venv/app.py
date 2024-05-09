@@ -45,12 +45,30 @@ def history_api():
 
     return jsonify({'history': history_json})
 
+@app.route('/delete_history', methods=['DELETE'])
+def delete_history():
+    try:
+        # 데이터베이스 연결
+        db = get_db()
+        cursor = db.cursor()
+
+        # 계산 히스토리 삭제
+        cursor.execute('DELETE FROM calculation_history')
+        db.commit()
+
+        # 데이터베이스 연결 종료
+        db.close()
+
+        return jsonify({'message': 'Calculation history deleted successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/')
 def home():
     return render_template('HelloWorld.html')
 
-@app.route('/request_api/<operation>', methods=['GET','POST'])
-def request_api(operation):
+@app.route('/calculator_api/<operation>', methods=['GET','POST'])
+def calculator_api(operation):
     if request.method == 'GET':
         num1 = int(request.args.get('num1'))
         num2 = int(request.args.get('num2'))

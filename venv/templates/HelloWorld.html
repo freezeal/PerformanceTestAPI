@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Request with Input</title>
+    <title>성능 테스트 예제 화면</title>
     <style>
         body {
             display: flex;
@@ -27,10 +27,10 @@
             <input type="number" id="num1" name="num1"><br><br>
             <label for="num2">Number 2:</label>
             <input type="number" id="num2" name="num2"><br><br>
-            <button type="button" onclick="requestAPI('add')">PlusApi Request</button>
-            <button type="button" onclick="requestAPI('subtract')">MinusApi Request</button>
-            <button type="button" onclick="requestAPI('multiply')">MultiApi Request</button>
-            <button type="button" onclick="requestAPI('divide')">DivApi Request</button>
+            <button type="button" onclick="calculatorAPI('add')">PlusApi Request</button>
+            <button type="button" onclick="calculatorAPI('subtract')">MinusApi Request</button>
+            <button type="button" onclick="calculatorAPI('multiply')">MultiApi Request</button>
+            <button type="button" onclick="calculatorAPI('divide')">DivApi Request</button>
             <br><br>
             <button type="button" onclick="showImage()">화면 전환</button>
             <button type="button" onclick="HistoryView()">히스토리</button>
@@ -38,7 +38,7 @@
     </div>
 
      <script>
-        function requestAPI(operation) {
+        function calculatorAPI(operation) {
             // 사용자가 입력한 숫자 가져오기
             var num1 = parseInt(document.getElementById('num1').value);
             var num2 = parseInt(document.getElementById('num2').value);
@@ -47,7 +47,7 @@
             var data = {num1: num1, num2: num2};
 
             // API 요청 보내기
-            fetch('/request_api/' + operation, {
+            fetch('/calculator_api/' + operation, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
