@@ -1,8 +1,57 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 import sqlite3
+import os
 
 app=Flask(__name__)
+app.secret_key = os.urandom(24)  # 세션 키 설정
+
+# SQLite 데이터베이스 연결 함수
+def get_db_connection():
+    conn = sqlite3.connect('user.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+# 사용자 테이블 생성 함수
+def create_user_table():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+# 기본 사용자 추가 함수
+def add_default_user():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE username=?', ('admin',))
+    user = cursor.fetchone()
+    if not user:
+        cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', ('admin', '1234'))
+        conn.commit()
+    conn.close()
+
+@app.route('/login_api', methods=['POST'])
+def login_api():
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM users WHERE username=? AND password=?', (username, password))
+    user = cursor.fetchone()
+    conn.close()
+
+    if user:
+        return jsonify({'message': 'Login successful'}), 200
+    else:
+        return jsonify({'error': 'Incorrect username or password'}), 401
 
 # SQLite 데이터베이스 파일 경로
 DATABASE = 'example.db'
@@ -64,8 +113,8 @@ def delete_history():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/')
-def home():
-    return render_template('HelloWorld.html')
+def login():
+    return render_template('Login.html')
 
 @app.route('/calculator_api/<operation>', methods=['GET','POST'])
 def calculator_api(operation):
@@ -98,6 +147,9 @@ def calculator_api(operation):
 
     return jsonify({'result': result})
 
+@app.route('/home')
+def home():
+    return render_template('HelloWorld.html')
 @app.route('/show_image')
 def show_image():
     return render_template('ShowImage.html')
@@ -108,3 +160,5 @@ def History():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    create_user_table()
+    add_default_user()

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성능 테스트 예제 화면</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+       <h1>로그인</h1>
+        <form id="LoginForm" method="POST">
+            <label for="username">id :</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Password :</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <button type="submit">Login</button>
+        </form>
+<script>
+        // Form submit 이벤트를 처리하는 함수
+        document.getElementById('LoginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 기본 동작(페이지 새로고침) 방지
+
+            // Form 데이터를 JSON 형식으로 변환
+            const formData = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            };
+
+            // JSON 데이터를 서버로 전송
+            fetch('/login_api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // 응답이 성공적으로 처리될 경우 HelloWorld.html로 리다이렉트
+                    window.location.replace('/home');
+
+                } else if (response.status === 401) {
+                    // 로그인 실패시 login.html 새로고침
+                    alert('Incorrect username or password');
+                    window.location.reload();
+
+                } else {
+                    // 정의되지 않은 응답 코드일 경우 얼럿 표시 후 login.html 새로고침
+                    alert('Unexpected error occurred');
+                    window.location.reload();
+                }
+            })
+            .catch(error => {
+                // 추가 예외상황 정리
+                console.error('Error:', error);
+                alert('Failed to login. Please try again later.');
+                window.location.reload();
+            });
+        });
+    </script>
+</body>
+</html>
