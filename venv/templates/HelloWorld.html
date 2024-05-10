@@ -34,6 +34,7 @@
             <br><br>
             <button type="button" onclick="showImage()">화면 전환</button>
             <button type="button" onclick="HistoryView()">히스토리</button>
+            <button type="submit">Logout</button>
         </form>
     </div>
 
@@ -69,6 +70,31 @@
          function HistoryView() {
             window.location.href = "/history_view";
          }
+
+        // 로그아웃 폼 submit 이벤트를 처리하는 함수
+        document.getElementById('numForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 기본 동작(페이지 새로고침) 방지
+
+            // 로그아웃 API 호출
+            fetch('/logout_api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // 로그아웃이 성공하면 login.html로 리다이렉트
+                    window.location.replace('/');
+                } else {
+                    alert('Failed to logout');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to logout');
+            });
+        });
     </script>
 </body>
 </html>

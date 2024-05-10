@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import requests
 import sqlite3
 import os
@@ -52,6 +52,15 @@ def login_api():
         return jsonify({'message': 'Login successful'}), 200
     else:
         return jsonify({'error': 'Incorrect username or password'}), 401
+
+@app.route('/logout_api', methods=['POST'])
+def logout_api():
+    # 세션 종료
+    if 'username' in session:
+        session.pop('username')
+        return jsonify({'message': 'Logout successful'}), 200
+    else:
+        return jsonify({'message': 'No active session'}), 200
 
 # SQLite 데이터베이스 파일 경로
 DATABASE = 'example.db'
