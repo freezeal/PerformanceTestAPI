@@ -77,6 +77,7 @@ def save_calculation_history(operation, num1, num2, result):
     cursor.execute('INSERT INTO calculation_history (operation, num1, num2, result) VALUES (?, ?, ?, ?)', (operation, num1, num2, result))
     db.commit()
     db.close()
+
 @app.route('/history_api')
 def history_api():
     # 데이터베이스 연결
@@ -159,6 +160,7 @@ def calculator_api(operation):
 @app.route('/home')
 def home():
     return render_template('HelloWorld.html')
+
 @app.route('/show_image')
 def show_image():
     return render_template('ShowImage.html')
