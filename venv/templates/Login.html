@@ -54,12 +54,12 @@
 
                 } else if (response.status === 401) {
                     // 로그인 실패시 login.html 새로고침
-                    alert('Incorrect username or password');
+                    alert('비밀번호를 다시 입력해주세요.');
                     window.location.reload();
 
                 } else {
                     // 정의되지 않은 응답 코드일 경우 얼럿 표시 후 login.html 새로고침
-                    alert('Unexpected error occurred');
+                    alert('다시 시도해주세요.');
                     window.location.reload();
                 }
             })

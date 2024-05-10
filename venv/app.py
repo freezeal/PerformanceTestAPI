@@ -49,6 +49,7 @@ def login_api():
     conn.close()
 
     if user:
+        session['username'] = username
         return jsonify({'message': 'Login successful'}), 200
     else:
         return jsonify({'error': 'Incorrect username or password'}), 401
@@ -159,7 +160,10 @@ def calculator_api(operation):
 
 @app.route('/home')
 def home():
-    return render_template('HelloWorld.html')
+    if 'username' in session:
+        return render_template('HelloWorld.html')
+    else:
+        return render_template('Login.html')
 
 @app.route('/show_image')
 def show_image():
