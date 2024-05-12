@@ -161,7 +161,7 @@ def calculator_api(operation):
 @app.route('/home')
 def home():
     if 'username' in session:
-        return render_template('HelloWorld.html')
+        return render_template('HelloWorld.html') # 세션이 있는 경우 HelloWorld로 리다이렉트
     else:
         return render_template('Login.html'), 401  # 세션이 없는 경우 401 에러 코드를 함께 반환
 
