@@ -163,7 +163,12 @@ def home():
     if 'username' in session:
         return render_template('HelloWorld.html')
     else:
-        return render_template('Login.html')
+        return render_template('Login.html'), 401  # 세션이 없는 경우 401 에러 코드를 함께 반환
+
+# 에러 핸들러를 통한 에러 메시지 커스터마이징
+@app.errorhandler(401)
+def unauthorized(error):
+    return render_template('Login.html'), 401  # 401 에러 발생 시 Login.html 페이지로 리다이렉트
 
 @app.route('/show_image')
 def show_image():
