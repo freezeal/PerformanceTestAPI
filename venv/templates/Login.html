@@ -49,7 +49,8 @@
             })
             .then(response => {
                 if (response.ok) {
-                    // 응답이 성공적으로 처리될 경우 HelloWorld.html로 리다이렉트
+                    // 응답이 성공 시 성공 팝업 노출시키고 HelloWorld.html로 리다이렉트
+                    alert('로그인 성공');
                     window.location.replace('/home');
 
                 } else if (response.status === 401) {

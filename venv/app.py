@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 import requests
 import sqlite3
 import os
+import logging
 
 app=Flask(__name__)
 app.secret_key = os.urandom(24)  # 세션 키 설정

@@ -84,7 +84,8 @@
             })
             .then(response => {
                 if (response.ok) {
-                    // 로그아웃이 성공하면 login.html로 리다이렉트
+                    // 로그아웃이 성공하면 성공 팝업 노출시키고 login.html로 리다이렉트
+                    alert('로그아웃 성공');
                     window.location.replace('/');
                 } else {
                     alert('Failed to logout');
