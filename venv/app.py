@@ -52,14 +52,25 @@ def login_api():
     if user:
         session['username'] = username
         return jsonify({'message': 'Login successful'}), 200
+
     else:
         return jsonify({'error': 'Incorrect username or password'}), 401
+
+    """if user:
+        session['username']=username
+        return jsonify({
+            'message': 'Login successful',
+            'session': {
+                'username': session['username']
+            }
+        }), 200"""
 
 @app.route('/logout_api', methods=['POST'])
 def logout_api():
     # 세션 종료
+    print(session)
     if 'username' in session:
-        session.pop('username')
+        session.pop('username', None)
         return jsonify({'message': 'Logout successful'}), 200
     else:
         return jsonify({'message': 'No active session'}), 200
@@ -166,7 +177,6 @@ def home():
     else:
         return render_template('Login.html'), 401  # 세션이 없는 경우 401 에러 코드를 함께 반환
 
-# 에러 핸들러를 통한 에러 메시지 커스터마이징
 @app.errorhandler(401)
 def unauthorized(error):
     return render_template('Login.html'), 401  # 401 에러 발생 시 Login.html 페이지로 리다이렉트
