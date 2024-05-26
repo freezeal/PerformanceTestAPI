@@ -56,15 +56,6 @@ def login_api():
     else:
         return jsonify({'error': 'Incorrect username or password'}), 401
 
-    """if user:
-        session['username']=username
-        return jsonify({
-            'message': 'Login successful',
-            'session': {
-                'username': session['username']
-            }
-        }), 200"""
-
 @app.route('/logout_api', methods=['POST'])
 def logout_api():
     # 세션 종료
