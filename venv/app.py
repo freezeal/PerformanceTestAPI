@@ -6,6 +6,12 @@ import logging
 
 app=Flask(__name__)
 app.secret_key = os.urandom(24)  # 세션 키 설정
+app.logger.setLevel(logging.DEBUG)
+
+#로그 수집을 위한 함수 추가
+@app.before_request
+def log_request_info():
+    app.logger.debug('Request: %s', request.data)
 
 # SQLite 데이터베이스 연결 함수
 def get_db_connection():
