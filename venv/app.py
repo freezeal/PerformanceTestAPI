@@ -65,7 +65,6 @@ def login_api():
 @app.route('/logout_api', methods=['POST'])
 def logout_api():
     # 세션 종료
-    print(session)
     if 'username' in session:
         session.pop('username', None)
         return jsonify({'message': 'Logout successful'}), 200
